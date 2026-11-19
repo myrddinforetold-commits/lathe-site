@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lathe Intelligence</title>
+<meta name="description" content="Intelligence, built to specification. Specialised AI models trained on your work, run on your terms, owned outright.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://latheintelligence.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://latheintelligence.com/">
+<meta property="og:title" content="Lathe Intelligence">
+<meta property="og:description" content="Intelligence, built to specification. Specialised AI models trained on your work, run on your terms, owned outright.">
+<meta property="og:image" content="https://latheintelligence.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --graphite:#16181A; --paper:#F3F2EE; --white:#FFFFFF; --steel:#5B616A; --steel-l:#A9AEB5;
+  --swarf:#C9CBCE; --ink2:#3B4047; --blue:#1E3FAE; --amber:#F2A900; --rule-d:#3A3E44;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --wrap:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--graphite);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible+span{outline:2px solid var(--blue);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:5%;padding-right:5%}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel)}
+.dark .eyebrow{color:var(--steel-l)}
+.btn{display:inline-block;text-decoration:none;background:var(--graphite);color:var(--paper);padding:15px 26px;font-size:18px;font-weight:500;border:0;font-family:inherit;cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--blue)}
+.btn.sm{padding:11px 20px;font-size:16px}
+.btn.ghost{background:transparent;color:var(--graphite);box-shadow:inset 0 0 0 1px var(--graphite)}
+.btn.ghost:hover{background:var(--graphite);color:var(--paper)}
+.link{font-size:18px;font-weight:500;padding:12px 0;text-underline-offset:4px}
+.link:hover{color:var(--blue)}
+
+/* lockup */
+.lockup{display:inline-flex;align-items:center;gap:.36em;line-height:1;white-space:nowrap;text-decoration:none}
+.lockup svg{height:.94em;width:.8225em;flex-shrink:0}
+.lockup b{font-weight:600;letter-spacing:-.035em}
+.lockup i{font-style:normal;font-weight:400;color:var(--steel);letter-spacing:-.03em;margin-left:.26em}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(243,242,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--swarf)}
+.nav .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 32px;padding-top:14px;padding-bottom:14px}
+.nav .lockup{font-size:22px;min-height:44px}
+.nav nav{display:flex;flex-wrap:wrap;align-items:center;gap:2px 26px;font-size:16px}
+.nav nav a:not(.btn){text-decoration:none;padding:10px 0}
+.nav nav a:not(.btn):hover{color:var(--blue)}
+
+/* hero */
+.hero{position:relative;background:#090B0D;color:var(--paper)}
+.hero.pinned{height:240vh}
+.hero-stage{position:relative;overflow:hidden}
+.hero.pinned .hero-stage{position:sticky;top:var(--navh,66px);height:calc(100vh - var(--navh,66px));min-height:540px;display:flex;align-items:center}
+.film-wrap{position:relative;display:block;width:100%;aspect-ratio:16/9;max-height:72vh;overflow:hidden;background:#090B0D}
+.hero.pinned .film-wrap{position:absolute;inset:0;aspect-ratio:auto;max-height:none}
+.hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:78% 50%;display:block}
+.hero-hd{opacity:0}
+.hero-hd.on{opacity:1;transition:opacity .2s}
+.hero.pinned .hero-stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(9,11,13,.9) 0%,rgba(9,11,13,.72) 32%,rgba(9,11,13,0) 64%)}
+.hero-grid{position:relative;z-index:2;padding-top:56px;padding-bottom:40px;width:100%}
+.hero-copy{max-width:640px;display:flex;flex-direction:column;gap:24px}
+.hero h1{font-size:clamp(44px,6.2vw,86px);font-weight:600;letter-spacing:-.045em;line-height:.98}
+.hero .sub{font-size:21px;line-height:1.45;color:var(--steel-l);max-width:520px}
+.hero .eyebrow{color:var(--steel-l)}
+.hero .btn{background:var(--paper);color:var(--graphite)}
+.hero .btn:hover{background:#fff}
+.hero .link{color:var(--paper)}
+.hero .link:hover{color:#fff}
+.hero a:focus-visible{outline-color:var(--paper)}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.hero-meter{position:relative;z-index:2;width:100%}
+.hero.pinned .hero-meter{position:absolute;left:0;right:0;bottom:0}
+.readout{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:13px;color:var(--steel-l);padding:14px 0}
+.readout b{font-weight:500;color:var(--paper)}
+.meterbar{height:2px;background:rgba(243,242,238,.14);position:relative;overflow:hidden}
+.meterbar i{position:absolute;inset:0;background:var(--paper);transform-origin:left;transform:scaleX(0)}
+.scrollhint{letter-spacing:1px;text-transform:uppercase;transition:opacity .3s}
+
+.claims{display:flex;flex-wrap:wrap;gap:14px 48px;border-top:1px solid var(--swarf);padding-top:24px;font-size:18px;font-weight:500}
+.claims div{flex:1 1 200px}
+
+/* sections */
+section{position:relative;scroll-margin-top:72px}
+.band{background:var(--white);border-top:1px solid var(--swarf);border-bottom:1px solid var(--swarf)}
+.dark{background:var(--graphite);color:var(--paper)}
+.pad{padding-top:96px;padding-bottom:96px}
+.head{display:flex;flex-direction:column;gap:14px;max-width:760px;margin-bottom:48px}
+.sheet{display:flex;align-items:center;gap:12px}
+.sheet::before{content:"";width:34px;height:2px;background:repeating-linear-gradient(90deg,currentColor 0 14px,transparent 14px 18px,currentColor 18px 22px,transparent 22px 26px);opacity:.7}
+h2{font-size:clamp(34px,4.5vw,54px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
+.lede{font-size:19px;color:var(--ink2)}
+.dark .lede{color:var(--swarf)}
+
+.steps{display:flex;flex-wrap:wrap;gap:40px 32px}
+.step{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.step svg{width:140px;height:100px}
+.step .n{font-family:var(--mono);font-size:13px;color:var(--steel)}
+.step h3{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.step p{color:var(--ink2)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.draw path{stroke-dasharray:var(--len,400);stroke-dashoffset:var(--len,400);transition:stroke-dashoffset 1.2s ease}
+.in .draw path,.draw.in path{stroke-dashoffset:0}
+
+/* spec builder */
+.spec{display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start}
+.controls{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:26px}
+.field{display:flex;flex-direction:column;gap:10px;border:0;padding:0;margin:0}
+.field>label,.field>legend{font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--steel);padding:0}
+select{font:inherit;font-size:17px;color:var(--graphite);background:var(--white);border:1px solid var(--swarf);border-radius:0;padding:13px 40px 13px 14px;min-height:48px;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--graphite) 50%),linear-gradient(135deg,var(--graphite) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 14px) 21px;background-size:6px 6px;background-repeat:no-repeat}
+select:hover{border-color:var(--graphite)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{position:relative;cursor:pointer}
+.chips input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.chips span{display:block;padding:11px 16px;min-height:46px;border:1px solid var(--swarf);background:var(--white);font-size:16px;transition:all .12s}
+.chips label:hover span{border-color:var(--graphite)}
+.chips input:checked+span{background:var(--graphite);color:var(--paper);border-color:var(--graphite)}
+
+.drawing{flex:1.4 1 460px;min-width:0;background:var(--white);border:1px solid var(--graphite);padding:10px;position:relative}
+.drawing-in{border:1px solid var(--graphite);display:flex;flex-direction:column}
+.dr-top{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;padding:24px;border-bottom:1px solid var(--swarf)}
+.dr-top svg{width:150px;height:107px;flex-shrink:0}
+.dr-title{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.dr-title .k{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--steel)}
+.dr-title .v{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1.12}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;gap:16px;padding:14px 24px;border-bottom:1px solid var(--swarf)}
+.row .k{flex:0 0 108px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--steel);padding-top:3px}
+.row .v{flex:1;min-width:0;font-size:16.5px}
+.tblock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--steel)}
+.tblock div{padding:10px 12px;border-right:1px solid var(--swarf);display:flex;flex-direction:column;gap:3px;min-width:0}
+.tblock div:last-child{border-right:0}
+.tblock b{font-weight:500;color:var(--graphite);font-size:12.5px;overflow-wrap:anywhere}
+.spec-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:20px}
+.note{font-size:15px;color:var(--steel)}
+.note code{font-family:var(--mono);font-size:14px;color:var(--graphite)}
+#copied{font-family:var(--mono);font-size:13px;color:var(--blue);min-height:20px}
+
+/* verticals */
+.verts{display:flex;flex-wrap:wrap;gap:24px}
+.vlead{flex:2 1 480px;min-width:0;background:var(--paper);border:1px solid var(--swarf);padding:36px;display:flex;flex-direction:column;gap:22px}
+.vlead .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.vlead .lockup{font-size:34px}
+.tag{font-family:var(--mono);font-size:13px;color:var(--blue);border:1px solid var(--blue);padding:6px 12px}
+.vlead h3{font-size:30px;font-weight:600;letter-spacing:-.03em;line-height:1.12}
+.pts{display:flex;flex-wrap:wrap;gap:12px 32px;color:var(--ink2)}
+.pts div{flex:1 1 200px}
+.vside{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.vcard{flex:1 1 auto;border:1px solid var(--swarf);padding:24px;display:flex;align-items:center;gap:18px;background:var(--white)}
+.vcard svg{width:84px;height:60px;flex-shrink:0}
+.vcard .nm{font-size:21px;line-height:1.1}
+.vcard .nm b{font-weight:600;letter-spacing:-.03em}
+.vcard .nm i{font-style:normal;color:var(--steel);margin-left:6px}
+.vcard .ln{font-size:15px;color:var(--steel);margin-top:4px}
+
+/* ownership + bitcomp */
+.own{display:flex;flex-wrap:wrap;gap:32px}
+.own div{flex:1 1 260px;min-width:0;border-top:1px solid var(--steel);padding-top:20px;display:flex;flex-direction:column;gap:8px}
+.own h3{font-size:22px;font-weight:600}
+.own p{color:var(--swarf)}
+.bit{border-top:1px solid var(--rule-d)}
+.bit .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:40px 56px}
+.bitmark{flex:0 1 240px;display:flex;justify-content:center;perspective:900px}
+.bitmark svg{width:200px;height:200px;transition:transform 1.4s cubic-bezier(.2,.7,.2,1),opacity .8s}
+.bitmark.rv{transform:none}
+.bitmark.rv svg{transform:rotateY(88deg);opacity:.2}
+.bitmark.rv.in svg{transform:none;opacity:1}
+.bitcopy{flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.bitcopy h2{font-family:var(--mono);font-weight:500;letter-spacing:-.02em;font-size:clamp(40px,6vw,68px);line-height:1}
+.tag.amber{color:var(--amber);border-color:var(--amber)}
+.bitcopy .link{color:var(--amber);align-self:flex-start}
+
+/* contact */
+.contact{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px}
+.contact h2{font-size:clamp(38px,5.5vw,74px);letter-spacing:-.045em;line-height:1}
+.contact .l{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.contact .r{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.mail{font-family:var(--mono);font-size:15px;color:var(--steel)}
+footer{border-top:1px solid var(--swarf)}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding-top:32px;padding-bottom:48px;font-size:15px;color:var(--steel)}
+footer .lockup{font-size:17px;color:var(--graphite)}
+footer nav{display:flex;flex-wrap:wrap;gap:4px 24px}
+footer nav a{padding:10px 0}
+
+@media (max-width:720px){
+  .pad{padding-top:64px;padding-bottom:64px}
+  .nav nav a:not(.btn){display:none}
+  .nav .wrap{flex-wrap:nowrap;gap:12px}
+  .nav .lockup{font-size:19px}
+  .btn.sm{padding:10px 14px;font-size:15px;white-space:nowrap}
+  .row{flex-direction:column;gap:4px}
+  .row .k{flex:none}
+  .tblock{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tblock div:nth-child(2){border-right:0}
+  .tblock div:nth-child(-n+2){border-bottom:1px solid var(--swarf)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .draw path{stroke-dashoffset:0;transition:none}
+  .bitmark.rv svg{transform:none;opacity:1;transition:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mk" viewBox="30 18 56 64"><path d="M30 48V18H44V34H86V48Z"/><path d="M30 52V82H44V66H86V52Z"/></symbol>
+    <symbol id="bk" viewBox="18 18 64 64"><path fill-rule="evenodd" d="M50 18A32 32 0 1 0 50.01 18ZM46 28V35.6A15 15 0 1 0 54 35.6V28Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="wrap">
+    <a class="lockup" href="#top" aria-label="Lathe Intelligence, home"><svg fill="currentColor" aria-hidden="true"><use href="#mk"/></svg><span><b>Lathe</b><i>Intelligence</i></span></a>
+    <nav aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#spec">Specify</a>
+      <a href="#verticals">Verticals</a>
+      <a href="#bitcomp">Bitcomp</a>
+      <a class="btn sm" href="#contact">Book a pilot</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="top">
+  <div class="hero-stage">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Specialised models, owned outright</div>
+        <h1>Intelligence, built to specification.</h1>
+        <p class="sub">Your model. Not everyone's. Trained on your work, run on your terms, owned outright.</p>
+        <div class="cta-row">
+          <a class="btn" href="#spec">Specify your model</a>
+          <a class="link" href="#how">See how it works</a>
+        </div>
+      </div>
+    </div>
+    <div class="film-wrap">
+      <canvas class="hero-film" id="film" width="1280" height="720" role="img" aria-label="Loose particles gather along a single axis and resolve into a precise turned form"></canvas>
+      <img class="hero-film hero-hd" id="filmhd" alt="" aria-hidden="true" decoding="async">
+    </div>
+    <div class="hero-meter">
+      <div class="wrap">
+        <div class="readout"><span>State <b id="rState">Part</b></span><span class="scrollhint" id="hint"></span></div>
+      </div>
+      <div class="meterbar" aria-hidden="true"><i id="meter"></i></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="padding-top:8px;padding-bottom:72px">
+    <div class="claims"><div>Owned, not rented.</div><div>Private by design.</div><div>Measured, not promised.</div></div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap pad">
+    <div class="head rv"><div class="eyebrow sheet">Sheet 02 / How it works</div><h2>Four steps, the way a part is made.</h2></div>
+    <div class="steps">
+      <div class="step rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g class="draw" fill="none" stroke="#16181A" stroke-width="1.5"><path d="M42 48V18H98V48Z"/><path d="M42 52V82H98V52Z"/></g><path d="M4 50H34M106 50H136" stroke="#16181A" stroke-width="1.2" stroke-dasharray="9 2 3 2"/></svg><div class="n">01</div><h3>Stock</h3><p>We select the strongest open foundation for your task.</p></div>
+      <div class="step rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g class="draw" fill="none" stroke="#16181A" stroke-width="1.5"><path d="M30 20H110"/><path d="M30 80H110"/><path d="M30 14V26M110 14V26M30 74V86M110 74V86"/><path d="M70 20V80"/><path d="M64 28L70 20L76 28M64 72L70 80L76 72"/></g></svg><div class="n">02</div><h3>Gauge</h3><p>We define what excellent looks like, in your terms.</p></div>
+      <div class="step rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g fill="#16181A"><path d="M42 48V18H56V24H98V48Z"/><path d="M42 52V82H56V76H98V52Z"/></g><path d="M56 18H98V24M56 82H98V76" fill="none" stroke="#5B616A" stroke-width="1" stroke-dasharray="3 3"/><path d="M56 29H98M56 34H98M56 71H98M56 66H98" fill="none" stroke="#FFFFFF" stroke-width="1"/><path d="M4 50H34M106 50H136" stroke="#16181A" stroke-width="1.2" stroke-dasharray="9 2 3 2"/></svg><div class="n">03</div><h3>Pass</h3><p>We train in passes. Every pass is measured against the gauge.</p></div>
+      <div class="step rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g fill="#16181A"><path d="M42 48V18H56V34H98V48Z"/><path d="M42 52V82H56V66H98V52Z"/></g><path d="M4 50H34M106 50H136" stroke="#16181A" stroke-width="1.2" stroke-dasharray="9 2 3 2"/></svg><div class="n">04</div><h3>Part</h3><p>A model built for one job: yours. Deployed where you choose.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="spec">
+  <div class="wrap pad">
+    <div class="head rv"><div class="eyebrow sheet">Sheet 03 / Specify</div><h2>Draw up your model.</h2><p class="lede">Four choices produce a specification. Send it to us and we will tell you what it takes to build.</p></div>
+    <div class="spec">
+      <form class="controls rv" id="specForm" novalidate>
+        <div class="field"><label for="fInd">Industry</label>
+          <select id="fInd" name="industry"></select></div>
+        <div class="field"><label for="fTask">Task</label>
+          <select id="fTask" name="task"></select></div>
+        <fieldset class="field"><legend>What matters most</legend>
+          <div class="chips" id="fPri"></div></fieldset>
+        <fieldset class="field"><legend>Where it runs</legend>
+          <div class="chips" id="fRun"></div></fieldset>
+      </form>
+      <div class="drawing rv" aria-live="polite">
+        <div class="drawing-in">
+          <div class="dr-top">
+            <svg viewBox="0 0 140 100" role="img" aria-label="Profile for the chosen industry"><g fill="none" stroke="#16181A" stroke-width="1.6"><path id="profA" d=""/><path id="profB" d="" transform="matrix(1 0 0 -1 0 100)"/></g><path d="M2 50H18M122 50H138" stroke="#1E3FAE" stroke-width="1.2" stroke-dasharray="9 2 3 2"/></svg>
+            <div class="dr-title"><span class="k">Part</span><span class="v" id="sPart"></span></div>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="k">Stock</span><span class="v" id="sStock"></span></div>
+            <div class="row"><span class="k">Gauge</span><span class="v" id="sGauge"></span></div>
+            <div class="row"><span class="k">Tolerance</span><span class="v" id="sTol"></span></div>
+            <div class="row"><span class="k">Runs on</span><span class="v" id="sRun"></span></div>
+            <div class="row"><span class="k">Ownership</span><span class="v">Model weights delivered to you.</span></div>
+          </div>
+          <div class="tblock">
+            <div><span>Drawn by</span><b>Lathe Intelligence</b></div>
+            <div><span>Document</span><b>Specification</b></div>
+            <div><span>Rev</span><b>A</b></div>
+            <div><span>Date</span><b id="sDate"></b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spec-actions">
+      <button class="btn" type="button" id="copyBtn">Copy specification</button>
+      <a class="btn ghost" id="mailBtn" href="#">Email it to us</a>
+      <span id="copied" role="status"></span>
+    </div>
+    <p class="note" style="margin-top:12px">Or write to <code id="mailText"></code> and paste it in.</p>
+  </div>
+</section>
+
+<section class="band" id="verticals">
+  <div class="wrap pad">
+    <div class="head rv"><div class="eyebrow sheet">Sheet 04 / Verticals</div><h2>One axis, many profiles.</h2><p class="lede">One method. A different profile for every industry.</p></div>
+    <div class="verts">
+      <div class="vlead rv">
+        <div class="top"><span class="lockup"><svg fill="currentColor" aria-hidden="true"><use href="#mk"/></svg><span><b>Lathe</b><i>Sports</i></span></span><span class="tag">First vertical</span></div>
+        <h3>A private model that learns how your club thinks.</h3>
+        <div class="pts"><div>Scouting reports drafted and graded in your own framework.</div><div>Scout notes in any language, standardised.</div><div>Opposition briefings written from your data.</div><div>Your data never leaves hardware you control.</div></div>
+        <a class="link" href="#contact" style="align-self:flex-start">Talk to us about a club pilot</a>
+      </div>
+      <div class="vside">
+        <div class="vcard rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g class="draw" fill="none" stroke="#16181A" stroke-width="2"><path d="M24 48V26H50V40H57V26H83V40H90V26H116V48Z"/><path d="M24 52V74H50V60H57V74H83V60H90V74H116V52Z"/></g></svg><div><div class="nm"><b>Lathe</b><i>Freight</i></div><div class="ln">Next. Customs and shipping documents.</div></div></div>
+        <div class="vcard rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g class="draw" fill="none" stroke="#16181A" stroke-width="2"><path d="M24 48V40H36C36 22 62 16 116 16V48Z"/><path d="M24 52V60H36C36 78 62 84 116 84V52Z"/></g></svg><div><div class="nm"><b>Lathe</b><i>Insurance</i></div><div class="ln">Next. Claims intake and review.</div></div></div>
+        <div class="vcard rv"><svg viewBox="0 0 140 100" aria-hidden="true"><g class="draw" fill="none" stroke="#16181A" stroke-width="2"><path d="M24 48A16 16 0 0 1 56 48Z"/><path d="M60 48V38H70C84 38 96 30 116 20V48Z"/><path d="M24 52A16 16 0 0 0 56 52Z"/><path d="M60 52V62H70C84 62 96 70 116 80V52Z"/></g></svg><div><div class="nm"><b>Lathe</b><i>Games</i></div><div class="ln">Next. In-game character dialogue.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="ownership">
+  <div class="wrap pad">
+    <div class="head rv" style="max-width:860px"><div class="eyebrow sheet">Sheet 05 / Ownership</div><h2>Rented intelligence is the same for everyone. Yours should be yours.</h2></div>
+    <div class="own">
+      <div class="rv"><h3>You hold the model</h3><p>The weights are yours. If you leave, the model leaves with you.</p></div>
+      <div class="rv"><h3>Your data stays put</h3><p>Trained and served on hardware you control.</p></div>
+      <div class="rv"><h3>It gets better with use</h3><p>Every day in production sharpens it further.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark bit" id="bitcomp">
+  <div class="wrap pad">
+    <div class="bitmark rv"><svg fill="#F2A900" role="img" aria-label="Bitcomp mark: a keyed bore"><use href="#bk"/></svg></div>
+    <div class="bitcopy rv">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px"><span class="eyebrow">The compute behind Lathe</span><span class="tag amber">Early access</span></div>
+      <h2>Bitcomp</h2>
+      <p class="lede" style="max-width:640px">The compute network behind Lathe. Verified work from GPUs everywhere, settled in BCU.</p>
+      <a class="link" href="https://bitcomp.network">bitcomp.network</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap pad contact">
+    <div class="l rv"><h2>Bring one task. Leave with a model.</h2><p class="lede" style="max-width:560px">Start with one task. See the numbers before you commit.</p></div>
+    <div class="r rv"><a class="btn" id="pilotBtn" href="#" style="padding:17px 30px;font-size:19px">Book a pilot</a><span class="mail" id="mailText2"></span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="lockup"><svg fill="currentColor" aria-hidden="true"><use href="#mk"/></svg><span><b>Lathe</b><i>Intelligence</i></span></span>
+    <nav aria-label="Footer"><a href="https://lathesports.com">Lathe Sports</a><a href="https://bitcomp.network">Bitcomp</a><a href="#top">latheintelligence.com</a></nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CONTACT = "hello@latheintelligence.com"; // TODO: confirm this mailbox exists
+  var $ = function(id){ return document.getElementById(id); };
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- nav ---------- */
+  var nav = $("nav");
+  function navState(){ nav.classList.toggle("scrolled", window.scrollY > 8); }
+
+  /* ---------- hero: scrolling runs the film ---------- */
+  var hero = $("top"), film = $("film"), fctx = film.getContext("2d");
+  var rState = $("rState"), hint = $("hint"), meter = $("meter");
+  var mode = "static";
+  function pickMode(){
+    var m = reduce ? "static" : (window.innerWidth >= 900 && window.innerHeight >= 600) ? "pin" : "flow";
+    if (m === mode) return;
+    mode = m;
+    hero.classList.toggle("pinned", mode === "pin");
+    hint.textContent = mode === "static" ? "" : "Scroll";
+  }
+  pickMode();
+  function navH(){ var n = document.querySelector(".nav"); if (n) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  navH(); window.addEventListener("resize", navH);
+
+  function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  // m/ = 192 light frames for scrubbing; h/ = native 2K frames shown once the scroll comes to rest
+  var N = 192, LAST = N - 1;
+  var big = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) > 1300;
+  var step = big ? 1 : 2;                       // phones load every second frame
+  var hdEl = $("filmhd"), hdAt = -1;
+  var mf = new Array(N), hf = {}, shown = "", cur = mode === "static" ? LAST : 0, target = cur, spinning = false;
+  function name(i){ var n = String(i); while (n.length < 3) n = "0" + n; return n + ".webp"; }
+  function hdIndex(i){ var r = Math.round(i / 4) * 4; return r > 188 ? LAST : r; }
+  function loadM(i){
+    if (mf[i]) return;
+    var im = new Image(); im.decoding = "async";
+    im.onload = function(){ im.ok = true; if (im.decode) im.decode().catch(function(){}); if (Math.abs(i - cur) < 6) paint(); };
+    im.src = "m/" + name(i); mf[i] = im;
+  }
+  function loadH(i){
+    if (hf[i]) return;
+    var im = new Image(); im.decoding = "async";
+    im.onload = function(){ im.ok = true; sharpen(); };
+    im.src = "h/" + name(i); hf[i] = im;
+  }
+  // at rest, lay the sharp frame over the canvas; drop it the moment the film moves
+  function sharpen(){
+    if (!big || cur !== target) return;
+    var want = Math.round(cur);
+    if (want !== hdIndex(want) || hdAt === want) return;
+    var h = hf[want];
+    if (!h) { loadH(want); return; }
+    if (!h.ok) return;
+    hdEl.onload = function(){ if (cur === target && Math.round(cur) === want) { hdAt = want; hdEl.classList.add("on"); } };
+    hdEl.src = h.src;
+  }
+  function blur(){ if (hdAt >= 0 || hdEl.classList.contains("on")) { hdEl.classList.remove("on"); hdAt = -1; } }
+  function nearest(i){
+    for (var d = 0; d < N; d++) {
+      if (mf[i - d] && mf[i - d].ok) return i - d;
+      if (mf[i + d] && mf[i + d].ok) return i + d;
+    }
+    return -1;
+  }
+  function put(im, key){ if (key === shown) return; fctx.drawImage(im, 0, 0, film.width, film.height); shown = key; }
+  function paint(){
+    var i = nearest(Math.round(cur));
+    if (i >= 0) put(mf[i], "m" + i);
+  }
+  function spin(){
+    var d = target - cur;
+    cur = Math.abs(d) < 0.4 ? target : cur + d * 0.38;
+    if (cur !== target) blur();
+    paint();
+    if (cur !== target) requestAnimationFrame(spin); else { spinning = false; sharpen(); }
+  }
+  var restTimer = 0;
+  function rest(){                               // settle on a frame that exists in 2K
+    if (!big || mode === "static") return;
+    target = hdIndex(target);
+    if (!spinning && cur !== target) { spinning = true; requestAnimationFrame(spin); } else sharpen();
+  }
+  // load order: the frame on screen, then an even spread that fills in (every 16th, 8th, 4th ...)
+  (function(){
+    if (mode === "static") { loadM(LAST); if (big) loadH(LAST); return; }
+    var order = [], seen = {};
+    [16, 8, 4, 2, 1].forEach(function(g){ if (g < step) return; for (var i = 0; i < N; i += g) if (!seen[i]) { seen[i] = 1; order.push(i); } });
+    if (!seen[LAST]) order.push(LAST);
+    var k = 0;
+    (function more(){ for (var j = 0; j < 10 && k < order.length; j++) loadM(order[k++]); if (k < order.length) setTimeout(more, 50); else if (big) hd(); })();
+    function hd(){ var q = []; for (var i = 0; i < N; i += 4) q.push(hdIndex(i)); q.push(LAST); var n = 0; (function more(){ if (!spinning && n < q.length) loadH(q[n++]); if (n < q.length) setTimeout(more, 250); })(); }
+  })();
+
+  function drawHero(p){
+    var t = clamp(p / .92);
+    target = mode === "static" ? LAST : t * LAST;
+    if (!spinning && cur !== target) { spinning = true; requestAnimationFrame(spin); }
+    clearTimeout(restTimer); restTimer = setTimeout(rest, 140);
+    meter.style.transform = "scaleX(" + t.toFixed(3) + ")";
+    rState.textContent = t < .04 ? "Stock" : t < .97 ? "Forming" : "Part";
+    hint.style.opacity = p > .04 ? 0 : 1;
+  }
+
+  function heroProgress(){
+    if (mode === "pin") {
+      var r = hero.getBoundingClientRect(), span = r.height - window.innerHeight;
+      return span > 0 ? clamp(-r.top / span) : 1;
+    }
+    // flow: the cut runs over the first stretch of scrolling
+    return clamp(window.scrollY / (window.innerHeight * 0.7));
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function(){
+      navState();
+      pickMode();
+      drawHero(mode === "static" ? 1 : heroProgress());
+      ticking = false;
+    });
+  }
+  drawHero(mode === "static" ? 1 : heroProgress());
+  navState();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+
+  /* ---------- reveal on view ---------- */
+  var drawn = document.querySelectorAll(".draw path");
+  for (var i = 0; i < drawn.length; i++) {
+    try { drawn[i].style.setProperty("--len", Math.ceil(drawn[i].getTotalLength()) + 2); } catch (e) {}
+  }
+  var rvs = document.querySelectorAll(".rv");
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: .18, rootMargin: "0px 0px -6% 0px" });
+    rvs.forEach(function(el){ io.observe(el); });
+  } else {
+    rvs.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---------- specification builder ---------- */
+  var DATA = {
+    "Sports": { profile: "M24 48V40H46A24 24 0 0 1 94 40H116V48Z", tasks: {
+      "Scouting reports": "Agreement with your senior scouts' past grades.",
+      "Opposition briefings": "Checked against briefings your analysts have signed off.",
+      "Scout note translation": "Accuracy on your own glossary of football terms.",
+      "Fan support": "Resolved correctly, in your club's voice." } },
+    "Freight": { profile: "M24 48V26H50V40H57V26H83V40H90V26H116V48Z", tasks: {
+      "Customs forms": "Fields extracted correctly against filed declarations.",
+      "Bills of lading": "Fields extracted correctly against your records.",
+      "Invoice matching": "Matches confirmed against settled invoices." } },
+    "Insurance": { profile: "M24 48V40H36C36 22 62 16 116 16V48Z", tasks: {
+      "Claims intake": "Triage decisions matched to your adjusters'.",
+      "Policy review": "Clauses flagged the way your reviewers flag them." } },
+    "Games": { profile: "M24 48A16 16 0 0 1 56 48ZM60 48V38H70C84 38 96 30 116 20V48Z", tasks: {
+      "Character dialogue": "In character, scored on your writers' rubric.",
+      "Player support": "Resolved correctly, within your policies." } },
+    "Another industry": { profile: "M24 48V22H72V34H116V48Z", tasks: {
+      "Document review": "Findings matched to your reviewers'.",
+      "Customer support": "Resolved correctly, in your voice.",
+      "Something else": "Defined with your experts." } }
+  };
+  var PRI = {
+    "Accuracy": "Tight. Fewer errors come before speed or cost.",
+    "Cost": "Lowest cost per task at the agreed accuracy.",
+    "Speed": "Fastest response at the agreed accuracy.",
+    "Privacy": "No data leaves hardware you control."
+  };
+  var RUN = ["Your own servers", "Your private cloud", "Managed by Lathe"];
+
+  var fInd = $("fInd"), fTask = $("fTask"), fPri = $("fPri"), fRun = $("fRun");
+  function opt(sel, v){ var o = document.createElement("option"); o.value = v; o.textContent = v; sel.appendChild(o); }
+  function chips(box, name, list){
+    list.forEach(function(v, i){
+      var l = document.createElement("label"), inp = document.createElement("input"), s = document.createElement("span");
+      inp.type = "radio"; inp.name = name; inp.value = v; if (i === 0) inp.checked = true;
+      s.textContent = v; l.appendChild(inp); l.appendChild(s); box.appendChild(l);
+    });
+  }
+  Object.keys(DATA).forEach(function(k){ opt(fInd, k); });
+  chips(fPri, "priority", Object.keys(PRI));
+  chips(fRun, "runs", RUN);
+  function fillTasks(){
+    fTask.innerHTML = "";
+    Object.keys(DATA[fInd.value].tasks).forEach(function(k){ opt(fTask, k); });
+  }
+  function picked(name){ var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ""; }
+
+  var today = new Date();
+  var dateStr = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
+  $("sDate").textContent = dateStr;
+
+  var current = {};
+  function render(){
+    var ind = fInd.value, task = fTask.value, pri = picked("priority"), run = picked("runs");
+    var name = ind === "Another industry" ? task : ind + ": " + task.charAt(0).toLowerCase() + task.slice(1);
+    current = {
+      part: "Model for " + name,
+      stock: "Open foundation, selected for this task.",
+      gauge: DATA[ind].tasks[task],
+      tol: pri + ". " + PRI[pri],
+      run: run + "."
+    };
+    $("sPart").textContent = current.part;
+    $("sStock").textContent = current.stock;
+    $("sGauge").textContent = current.gauge;
+    $("sTol").textContent = current.tol;
+    $("sRun").textContent = current.run;
+    $("profA").setAttribute("d", DATA[ind].profile);
+    $("profB").setAttribute("d", DATA[ind].profile);
+    $("mailBtn").setAttribute("href", "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Specification: " + current.part) + "&body=" + encodeURIComponent(specText()));
+    $("copied").textContent = "";
+  }
+  function specText(){
+    return ["LATHE INTELLIGENCE: SPECIFICATION (Rev A, " + dateStr + ")", "",
+      "Part: " + current.part, "Stock: " + current.stock, "Gauge: " + current.gauge,
+      "Tolerance: " + current.tol, "Runs on: " + current.run, "Ownership: Model weights delivered to you."].join("\n");
+  }
+  fInd.addEventListener("change", function(){ fillTasks(); render(); });
+  fTask.addEventListener("change", render);
+  fPri.addEventListener("change", render);
+  fRun.addEventListener("change", render);
+  $("specForm").addEventListener("submit", function(e){ e.preventDefault(); });
+  fillTasks(); render();
+
+  $("copyBtn").addEventListener("click", function(){
+    var done = function(ok){ $("copied").textContent = ok ? "Copied. Paste it into an email to " + CONTACT : "Copy is blocked here. Select the sheet and copy it by hand."; };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(specText()).then(function(){ done(true); }, function(){ done(false); });
+      } else { done(false); }
+    } catch (e) { done(false); }
+  });
+
+  $("mailText").textContent = CONTACT;
+  $("mailText2").textContent = CONTACT;
+  $("pilotBtn").setAttribute("href", "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Pilot enquiry"));
+})();
+</script>
+</body>
+</html>
