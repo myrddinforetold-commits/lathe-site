@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "has": [{ "type": "host", "value": "(www\\.)?lathesports\\.com" }], "destination": "/sports" }
+  ],
   "headers": [
     { "source": "/(m|h)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
   ]

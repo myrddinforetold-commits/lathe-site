@@ -182,6 +182,8 @@ select:hover{border-color:var(--graphite)}
 .own div{flex:1 1 260px;min-width:0;border-top:1px solid var(--steel);padding-top:20px;display:flex;flex-direction:column;gap:8px}
 .own h3{font-size:22px;font-weight:600}
 .own p{color:var(--swarf)}
+.own.lt p{color:var(--ink2)}
+.own.four div{flex:1 1 200px}
 .bit{border-top:1px solid var(--rule-d)}
 .bit .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:40px 56px}
 .bitmark{flex:0 1 240px;display:flex;justify-content:center;perspective:900px}
@@ -240,6 +242,7 @@ footer nav a{padding:10px 0}
     <a class="lockup" href="#top" aria-label="Lathe Intelligence, home"><svg fill="currentColor" aria-hidden="true"><use href="#mk"/></svg><span><b>Lathe</b><i>Intelligence</i></span></a>
     <nav aria-label="Main">
       <a href="#how">How it works</a>
+      <a href="#capabilities">Capabilities</a>
       <a href="#spec">Specify</a>
       <a href="#verticals">Verticals</a>
       <a href="#bitcomp">Bitcomp</a>
@@ -293,9 +296,23 @@ footer nav a{padding:10px 0}
   </div>
 </section>
 
+<section id="capabilities">
+  <div class="wrap pad">
+    <div class="head rv" style="max-width:860px"><div class="eyebrow sheet">Sheet 03 / Capabilities</div><h2>Six kinds of work a Lathe model takes on.</h2><p class="lede">Each one is trained on your own records and measured against how the work is done today.</p></div>
+    <div class="own lt">
+      <div class="rv"><h3>Extract</h3><p>Turn reports, notes and files into structured records.</p></div>
+      <div class="rv"><h3>Assess</h3><p>Rate, grade or triage a case the way your experts do.</p></div>
+      <div class="rv"><h3>Predict</h3><p>Say what happens next, learned from your own history.</p></div>
+      <div class="rv"><h3>Shortlist</h3><p>Take a brief in plain words and return ranked options with reasons.</p></div>
+      <div class="rv"><h3>Draft</h3><p>Produce reports and proposals in the house style.</p></div>
+      <div class="rv"><h3>Advise</h3><p>Answer staff questions from the organisation's own records.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="spec">
   <div class="wrap pad">
-    <div class="head rv"><div class="eyebrow sheet">Sheet 03 / Specify</div><h2>Draw up your model.</h2><p class="lede">Four choices produce a specification. Send it to us and we will tell you what it takes to build.</p></div>
+    <div class="head rv"><div class="eyebrow sheet">Sheet 04 / Specify</div><h2>Draw up your model.</h2><p class="lede">Four choices produce a specification. Send it to us and we will tell you what it takes to build.</p></div>
     <div class="spec">
       <form class="controls rv" id="specForm" novalidate>
         <div class="field"><label for="fInd">Industry</label>
@@ -340,7 +357,7 @@ footer nav a{padding:10px 0}
 
 <section class="band" id="verticals">
   <div class="wrap pad">
-    <div class="head rv"><div class="eyebrow sheet">Sheet 04 / Verticals</div><h2>One axis, many profiles.</h2><p class="lede">One method. A different profile for every industry.</p></div>
+    <div class="head rv"><div class="eyebrow sheet">Sheet 05 / Verticals</div><h2>One axis, many profiles.</h2><p class="lede">One method. A different profile for every industry.</p></div>
     <div class="verts">
       <div class="vlead rv">
         <div class="top"><span class="lockup"><svg fill="currentColor" aria-hidden="true"><use href="#mk"/></svg><span><b>Lathe</b><i>Sports</i></span></span><span class="tag">First vertical</span></div>
@@ -357,9 +374,21 @@ footer nav a{padding:10px 0}
   </div>
 </section>
 
+<section id="assurance">
+  <div class="wrap pad">
+    <div class="head rv" style="max-width:860px"><div class="eyebrow sheet">Sheet 06 / Assurance</div><h2>Every model ships with the evidence that it works.</h2></div>
+    <div class="own lt four">
+      <div class="rv"><h3>Baselines first</h3><p>Before training, we measure what a rule of thumb and a specialist tool already achieve. The model has to beat them.</p></div>
+      <div class="rv"><h3>Unseen work only</h3><p>A share of your data is locked away. Every score comes from cases the model never trained on.</p></div>
+      <div class="rv"><h3>Shortcut checks</h3><p>We test for memorising and for gaming the measure, and report the result of each check.</p></div>
+      <div class="rv"><h3>Full trace</h3><p>Every answer is kept beside the right one, open to your own staff.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="dark" id="ownership">
   <div class="wrap pad">
-    <div class="head rv" style="max-width:860px"><div class="eyebrow sheet">Sheet 05 / Ownership</div><h2>Rented intelligence is the same for everyone. Yours should be yours.</h2></div>
+    <div class="head rv" style="max-width:860px"><div class="eyebrow sheet">Sheet 07 / Ownership</div><h2>Rented intelligence is the same for everyone. Yours should be yours.</h2></div>
     <div class="own">
       <div class="rv"><h3>You hold the model</h3><p>The weights are yours. If you leave, the model leaves with you.</p></div>
       <div class="rv"><h3>Your data stays put</h3><p>Trained and served on hardware you control.</p></div>
