@@ -106,6 +106,12 @@ h2{font-size:clamp(34px,4.4vw,56px);font-weight:600;letter-spacing:-.04em;line-h
 .why div{border-top:1.5px solid var(--graphite);padding-top:20px;display:flex;flex-direction:column;gap:10px}
 .why h3{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .why p{color:var(--steel)}
+.why.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dark .why div{border-top-color:var(--swarf)}
+.dark .why p{color:var(--swarf)}
+.why .n{font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1;border-top:0;padding-top:0;display:block}
+.note{margin-top:40px;font-size:14px;color:var(--swarf)}
+
 
 /* pilot */
 .pilot{background:var(--white);border-top:1px solid var(--swarf);border-bottom:1px solid var(--swarf)}
@@ -142,13 +148,13 @@ footer a{text-decoration:none}footer a:hover{color:var(--blue)}
   .depts,.who{grid-template-columns:1fr}
   .dept{padding:28px}
   .ex{grid-template-columns:1fr;gap:40px}
-  .why{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .why,.why.three{grid-template-columns:repeat(2,minmax(0,1fr))}
   .weeks{grid-template-columns:1fr;border-top:0;border-left:1px solid var(--swarf);margin-left:4px}
   .weeks li{padding:24px 0 0 24px}.weeks li:not(.prog)::before{top:32px;left:-5px}.weeks .prog{top:0;bottom:0;left:-2px;right:auto;width:3px;height:auto;transform-origin:top;transform:scaleY(0)}
 }
 @media (max-width:640px){
   .sheet{grid-template-columns:1fr;padding:18px}.arrow{transform:rotate(90deg);justify-self:center}
-  .why{grid-template-columns:1fr}
+  .why,.why.three{grid-template-columns:1fr}
   .nav nav a:not(.btn){display:none}
 }
 </style>
@@ -244,6 +250,32 @@ footer a{text-decoration:none}footer a:hover{color:var(--blue)}
       </div>
       <p class="cap">Illustration with an invented player. A real profile uses your attributes and your scale.</p>
     </div>
+  </div>
+</section>
+
+<section id="recruitment" style="border-top:1px solid var(--swarf)">
+  <div class="wrap pad">
+    <div class="eyebrow rv">Recruitment</div>
+    <h2 class="rv" style="margin-top:16px;max-width:820px">Three tools for a recruitment department.</h2>
+    <div class="why three">
+      <div class="rv"><h3>Note to ratings</h3><p>A scout's written note becomes a full 36-attribute profile, comparable across every scout and every league.</p></div>
+      <div class="rv"><h3>Development forecast</h3><p>For any player, a forecast of how far he moves over the next season, ranked across a squad or a target list.</p></div>
+      <div class="rv"><h3>Brief to shortlist</h3><p>"A left-back like ours, under 25, within budget." Named candidates, ranked, each with the case for and against.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="measured">
+  <div class="wrap pad">
+    <div class="eyebrow rv">Measured</div>
+    <h2 class="rv" style="margin-top:16px;max-width:820px">Scored on players the model never saw.</h2>
+    <div class="why">
+      <div class="rv"><div class="n">3.8 to 1.4</div><h3>Note to ratings</h3><p>Average miss per rating on a 20-point scale, base model against the Lathe model.</p></div>
+      <div class="rv"><div class="n">83%</div><h3>Within two points</h3><p>Share of ratings within two points of the true value, up from 33%.</p></div>
+      <div class="rv"><div class="n">6.5 to 2.9</div><h3>Development forecast</h3><p>Average miss in ability points on a 200-point scale, over one season.</p></div>
+      <div class="rv"><div class="n">35%</div><h3>Top young improvers found</h3><p>Against 23% for the age rule of thumb a club uses today.</p></div>
+    </div>
+    <p class="note rv">Internal benchmarks on football simulation data. Targets were set before training.</p>
   </div>
 </section>
 
