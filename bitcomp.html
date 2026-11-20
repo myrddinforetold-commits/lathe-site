@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitcomp | Compute, proven</title>
+<meta name="description" content="Bitcomp is the compute network behind Lathe. Spare GPUs do real training work, every job is checked, and verified work is settled in BCU.">
+<meta name="theme-color" content="#101214">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="canonical" href="https://bitcomp.network/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bitcomp | Compute, proven">
+<meta property="og:description" content="The compute network behind Lathe. Real training work, checked, settled in BCU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#101214; --panel:#16181A; --line:#2A2E33; --paper:#F3F2EE; --steel-l:#A9AEB5; --steel:#7C838C;
+  --amber:#F2A900;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+h1,h2,h3,p,ol,ul{margin:0;padding:0}
+.wrap{max-width:1200px;margin:0 auto;padding-left:5%;padding-right:5%}
+.pad{padding-top:104px;padding-bottom:104px}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-l)}
+.lede{font-size:21px;line-height:1.45;color:var(--steel-l)}
+h2{font-size:clamp(34px,4.4vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1.02;text-wrap:balance}
+.btn{display:inline-block;text-decoration:none;background:var(--amber);color:#101214;padding:15px 26px;font-size:18px;font-weight:500;transition:background .15s}
+.btn:hover{background:#FFC53D}
+.btn.sm{padding:11px 20px;font-size:16px}
+.link{font-size:18px;font-weight:500;padding:12px 0;text-underline-offset:4px}
+.link:hover{color:var(--amber)}
+
+.lockup{display:inline-flex;align-items:center;gap:.4em;line-height:1;white-space:nowrap;text-decoration:none;font-weight:600;letter-spacing:-.035em}
+.lockup svg{height:1em;width:1em;flex-shrink:0}
+
+.nav{position:sticky;top:0;z-index:20;background:rgba(16,18,20,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 32px;padding-top:14px;padding-bottom:14px}
+.nav .lockup{font-size:22px;min-height:44px}
+.nav nav{display:flex;flex-wrap:wrap;align-items:center;gap:2px 26px;font-size:16px}
+.nav nav a:not(.btn){text-decoration:none;padding:10px 0;color:var(--steel-l)}
+.nav nav a:not(.btn):hover{color:var(--paper)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;min-height:calc(100vh - 73px);padding-top:56px;padding-bottom:56px}
+.hero-copy{display:flex;flex-direction:column;gap:24px}
+.hero h1{font-size:clamp(46px,6.4vw,92px);font-weight:600;letter-spacing:-.05em;line-height:.96}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--steel-l)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--amber);display:block}
+.ring{width:100%;max-width:560px;justify-self:center;aspect-ratio:1;display:block}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:56px;border-top:1px solid var(--line)}
+.step{padding:32px 32px 8px 0;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.step + .step{padding-left:32px}
+.step:last-child{border-right:0}
+.step .n{font-family:var(--mono);font-size:13px;color:var(--amber)}
+.step h3{font-size:28px;font-weight:600;letter-spacing:-.03em}
+.step p{color:var(--steel-l)}
+
+/* proof */
+.proof{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.proof-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
+.checks{list-style:none;display:flex;flex-direction:column}
+.checks li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;padding:24px 0;border-top:1px solid var(--line)}
+.checks li:last-child{border-bottom:1px solid var(--line)}
+.checks b{font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);font-weight:500;padding-top:4px}
+.checks h3{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.checks p{color:var(--steel-l)}
+
+/* bcu */
+.bcu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:start}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.fact{background:var(--bg);padding:24px;display:flex;flex-direction:column;gap:6px}
+.fact span{font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--steel)}
+.fact strong{font-size:22px;font-weight:600;letter-spacing:-.02em}
+
+/* roadmap */
+.road{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:48px;border-top:1px solid var(--line)}
+.road li{padding:24px 24px 0 0;display:flex;flex-direction:column;gap:8px;position:relative}
+.road li::before{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--line)}
+.road li.now::before{background:var(--amber)}
+.road span{font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--steel)}
+.road li.now span{color:var(--amber)}
+.road h3{font-size:20px;font-weight:600;letter-spacing:-.02em}
+.road p{color:var(--steel-l);font-size:16px}
+
+/* join */
+.join{background:var(--panel);border-top:1px solid var(--line)}
+.join .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--steel-l);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 24px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--paper)}
+.note{max-width:760px;font-size:14px;color:var(--steel);margin-top:20px}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media (max-width:900px){
+  .pad{padding-top:72px;padding-bottom:72px}
+  .hero .wrap{grid-template-columns:1fr;min-height:0;gap:24px}
+  .ring{max-width:380px}
+  .steps,.road{grid-template-columns:1fr}
+  .step,.step + .step{padding:28px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .road li{padding:28px 0 0 24px}
+  .road{border-top:0;border-left:1px solid var(--line);margin-left:4px}
+  .road li::before{top:34px;left:-5px}
+  .proof-grid,.bcu-grid{grid-template-columns:1fr;gap:40px}
+  .checks li{grid-template-columns:1fr;gap:6px}
+}
+@media (max-width:520px){.facts{grid-template-columns:1fr}.nav nav a:not(.btn){display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="bk" viewBox="18 18 64 64"><path fill-rule="evenodd" d="M50 18 A32 32 0 1 0 50.01 18 Z M46 28 V35.6 A15 15 0 1 0 54 35.6 V28 Z"/></symbol>
+  <symbol id="mk" viewBox="30 18 56 64"><path d="M30 48V18H44V34H86V48Z"/><path d="M30 48V18H44V34H86V48Z" transform="matrix(1 0 0 -1 0 100)"/></symbol>
+</defs></svg>
+
+<div class="nav">
+  <div class="wrap">
+    <a class="lockup" href="#top" aria-label="Bitcomp, home"><svg fill="#F2A900" aria-hidden="true"><use href="#bk"/></svg><span>Bitcomp</span></a>
+    <nav aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#proof">Proof of compute</a>
+      <a href="#bcu">BCU</a>
+      <a href="#roadmap">Roadmap</a>
+      <a class="btn sm" href="#join">Register a GPU</a>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="status"><i></i>Early access</span>
+      <h1>Compute, <em>proven.</em></h1>
+      <p class="lede" style="max-width:520px">Bitcomp is the network that trains Lathe models. Spare GPUs do real work, every job is checked, and verified work is settled in BCU.</p>
+      <div class="cta-row">
+        <a class="btn" href="#join">Register a GPU</a>
+        <a class="link" href="#proof">How work is proven</a>
+      </div>
+    </div>
+    <canvas class="ring" id="ring" width="1120" height="1120" role="img" aria-label="A ring of machines sending verified work to the Bitcomp mark at the centre"></canvas>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap pad">
+    <div class="eyebrow rv">How it works</div>
+    <h2 class="rv" style="margin-top:16px;max-width:820px">Real work in. Proof out. Payment on proof.</h2>
+    <div class="steps">
+      <div class="step rv"><span class="n">01</span><h3>Provide</h3><p>Run the Bitcomp client on a machine with a capable GPU. It picks up training jobs from Lathe when the machine is free.</p></div>
+      <div class="step rv"><span class="n">02</span><h3>Prove</h3><p>Every job returns its result with a fingerprint of the computation. The network checks the fingerprint and re-runs a sample of jobs.</p></div>
+      <div class="step rv"><span class="n">03</span><h3>Paid</h3><p>Work that passes is credited in BCU. Work that fails a check is not paid, and the deposit behind it is at risk.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="proof" id="proof">
+  <div class="wrap pad proof-grid">
+    <div class="rv">
+      <div class="eyebrow">Proof of compute</div>
+      <h2 style="margin-top:16px">Useful work, not wasted work.</h2>
+      <p class="lede" style="margin-top:24px">Proof of work burns energy on puzzles nobody needs solved. Proof of compute pays for training that a customer is waiting for, and proves it was done properly.</p>
+    </div>
+    <ol class="checks">
+      <li class="rv"><b>Deposit</b><div><h3>Skin in the game</h3><p>A provider posts a deposit before taking work. It is returned in full to honest providers and forfeited by dishonest ones.</p></div></li>
+      <li class="rv"><b>Fingerprint</b><div><h3>The computation leaves a trace</h3><p>Each result carries a compact signature of the model and hardware that produced it. A swapped model or a faked result does not match.</p></div></li>
+      <li class="rv"><b>Spot-check</b><div><h3>A sample is run again</h3><p>Trusted machines repeat a random share of jobs and compare. A provider never knows which job will be checked.</p></div></li>
+      <li class="rv"><b>Penalty</b><div><h3>Cheating costs more than it earns</h3><p>A failed check forfeits the deposit and removes the provider. The arithmetic is set so that honest work is the only profitable strategy.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="bcu">
+  <div class="wrap pad bcu-grid">
+    <div class="rv">
+      <div class="eyebrow">BCU</div>
+      <h2 style="margin-top:16px">One unit. A fixed amount of verified compute.</h2>
+      <p class="lede" style="margin-top:24px">BCU is how the network keeps account. Providers earn it for verified work. Customers spend it on training and inference. Its price floats, so it reports what compute is actually worth.</p>
+    </div>
+    <div class="facts rv">
+      <div class="fact"><span>Backed by</span><strong>Verified compute</strong></div>
+      <div class="fact"><span>Redeemable for</span><strong>A fixed unit of compute</strong></div>
+      <div class="fact"><span>Price</span><strong>Free-floating</strong></div>
+      <div class="fact"><span>Settlement</span><strong>Base</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="proof" id="roadmap">
+  <div class="wrap pad">
+    <div class="eyebrow rv">Roadmap</div>
+    <h2 class="rv" style="margin-top:16px;max-width:820px">Built in the order that earns trust.</h2>
+    <ol class="road">
+      <li class="now rv"><span>Now</span><h3>Trusted compute</h3><p>Lathe trains on machines it controls while the checks are built and tested.</p></li>
+      <li class="rv"><span>Next</span><h3>Peer network</h3><p>Outside providers join. Verified work is tracked as points, off-chain.</p></li>
+      <li class="rv"><span>Then</span><h3>BCU on Base</h3><p>Points become BCU. Deposits and payouts move on-chain.</p></li>
+      <li class="rv"><span>After</span><h3>Open platform</h3><p>Anyone can bring a training job to the network, not only Lathe.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap pad">
+    <div class="rv">
+      <h2>Have GPUs standing idle?</h2>
+      <p class="lede" style="margin-top:16px;max-width:560px">Register your hardware for the first provider cohort. Tell us what you run and where.</p>
+    </div>
+    <div class="rv"><a class="btn" id="joinBtn" href="#" style="padding:17px 30px;font-size:19px">Register a GPU</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="lockup" style="font-size:18px"><svg fill="#F2A900" aria-hidden="true"><use href="#bk"/></svg><span>Bitcomp</span></span>
+    <nav aria-label="Footer"><a href="https://latheintelligence.com">Lathe Intelligence</a><a href="#top">bitcomp.network</a></nav>
+  </div>
+  <div class="wrap"><p class="note">Bitcomp is in early access. BCU has not been issued and is not available to buy. Nothing on this page is an offer or an invitation to invest.</p></div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CONTACT = "hello@latheintelligence.com";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var body = "Hardware (GPU model and count):\nLocation:\nConnection:\nAvailability (hours per day):\n";
+  document.getElementById("joinBtn").href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Bitcomp provider registration") + "&body=" + encodeURIComponent(body);
+
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: .15 }) : null;
+  document.querySelectorAll(".rv").forEach(function(el){ io ? io.observe(el) : el.classList.add("in"); });
+
+  /* hero: a ring of machines; work travels in, a check mark of light travels back */
+  var c = document.getElementById("ring"), x = c.getContext("2d"), S = 1120, C = S / 2, R = 525, N = 32;
+  var mark = new Path2D("M50 18 A32 32 0 1 0 50.01 18 Z M46 28 V35.6 A15 15 0 1 0 54 35.6 V28 Z");
+  var nodes = [], pulses = [];
+  for (var i = 0; i < N; i++) { var a = (i / N) * Math.PI * 2 - Math.PI / 2; nodes.push({ a: a, x: C + Math.cos(a) * R, y: C + Math.sin(a) * R, lit: 0 }); }
+  function spawn(){ var n = nodes[Math.floor(Math.random() * N)]; pulses.push({ n: n, t: 0, back: false }); }
+  function draw(now){
+    x.clearRect(0, 0, S, S);
+    x.lineWidth = 1.5; x.strokeStyle = "#2A2E33";
+    x.beginPath(); x.arc(C, C, R, 0, Math.PI * 2); x.stroke();
+    x.beginPath(); x.arc(C, C, R * .62, 0, Math.PI * 2); x.setLineDash([4, 10]); x.stroke(); x.setLineDash([]);
+    nodes.forEach(function(n){
+      x.beginPath(); x.moveTo(n.x, n.y); x.lineTo(C + Math.cos(n.a) * 185, C + Math.sin(n.a) * 185);
+      x.strokeStyle = "rgba(124,131,140,.16)"; x.lineWidth = 1; x.stroke();
+      n.lit *= .96;
+      x.beginPath(); x.arc(n.x, n.y, 9, 0, Math.PI * 2);
+      x.fillStyle = n.lit > .05 ? "rgba(242,169,0," + (.35 + n.lit * .65) + ")" : "#3A3E44"; x.fill();
+    });
+    pulses = pulses.filter(function(p){
+      p.t += reduce ? 0 : .012;
+      var k = p.back ? 1 - p.t : p.t, r = R - (R - 185) * k;
+      x.beginPath(); x.arc(C + Math.cos(p.n.a) * r, C + Math.sin(p.n.a) * r, p.back ? 5 : 6, 0, Math.PI * 2);
+      x.fillStyle = p.back ? "#F2A900" : "#A9AEB5"; x.fill();
+      if (p.t >= 1) { if (p.back) { p.n.lit = 1; return false; } p.back = true; p.t = 0; }
+      return true;
+    });
+    x.save(); x.translate(C, C); x.rotate(reduce ? 0 : now / 9000); x.scale(4.4, 4.4); x.translate(-50, -50);
+    x.fillStyle = "#F2A900"; x.fill(mark, "evenodd"); x.restore();
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  if (reduce) { nodes.forEach(function(n, i){ if (i % 3 === 0) n.lit = 1; }); draw(0); }
+  else { setInterval(function(){ if (!document.hidden && pulses.length < 9) spawn(); }, 420); requestAnimationFrame(draw); }
+})();
+</script>
+</body>
+</html>
