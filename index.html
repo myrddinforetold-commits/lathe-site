@@ -212,6 +212,12 @@ footer nav a{padding:10px 0}
 .mad-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;margin-bottom:40px}
 .mad-top .head{margin-bottom:0}
 .tag.light{color:var(--paper);border-color:var(--steel)}
+.render{margin:0 0 32px;border:1px solid var(--rule-d);padding:10px}
+.render img{display:block;width:100%;height:auto;background:#0f1113}
+.render figcaption,.renders figcaption{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--steel-l);padding:12px 4px 2px}
+.renders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:56px}
+.renders figure{margin:0;min-width:0;border:1px solid var(--rule-d);padding:10px}
+.renders img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#0f1113}
 .mad{display:flex;flex-direction:column}
 .plan{min-width:0;border:1px solid var(--rule-d);border-bottom:0;padding:10px 10px 0}
 .plan-in{border:1px solid var(--rule-d);overflow-x:auto}
@@ -251,6 +257,7 @@ footer nav a{padding:10px 0}
 .dark .link{color:var(--paper)}
 @media (max-width:720px){
   .mline{grid-template-columns:1fr;gap:28px}
+  .renders{grid-template-columns:1fr}
   .mspec{grid-template-columns:1fr}
   .mspec .row:nth-child(odd){border-right:0}
   .mspec .row .k{flex-basis:auto}
@@ -344,6 +351,11 @@ footer nav a{padding:10px 0}
       <span class="tag light rv">In development · target opening late 2027</span>
     </div>
 
+    <figure class="render rv">
+      <img src="/m/madryn-site.webp" srcset="/m/madryn-site-960.webp 960w, /m/madryn-site.webp 1672w" sizes="(max-width:1260px) 100vw, 1200px" width="1672" height="941" loading="lazy" decoding="async" alt="Concept rendering of Project Madryn: a graphite-clad warehouse converted into a data hall, with a transformer, generator and cooling plant on a gravel yard, poplars and a willow, a new fence and gate on the street, and wind turbines on the horizon.">
+      <figcaption>Concept rendering · Project Madryn, Puerto Madryn</figcaption>
+    </figure>
+
     <div class="mad">
       <figure class="plan rv" style="margin:0">
         <div class="plan-in">
@@ -424,6 +436,11 @@ footer nav a{padding:10px 0}
           <div><span>Status</span><b>In development</b></div>
         </div>
       </div>
+    </div>
+
+    <div class="renders">
+      <figure class="rv"><img src="/m/madryn-dusk.webp" srcset="/m/madryn-dusk-960.webp 960w, /m/madryn-dusk.webp 1672w" sizes="(max-width:720px) 100vw, 680px" width="1672" height="941" loading="lazy" decoding="async" alt="Concept rendering at dusk: the site from the street, with wall lights, glowing air intakes and a lit operations office."><figcaption>Concept rendering · from the street at dusk</figcaption></figure>
+      <figure class="rv"><img src="/m/madryn-hall.webp" srcset="/m/madryn-hall-960.webp 960w, /m/madryn-hall.webp 1448w" sizes="(max-width:720px) 100vw, 520px" width="1448" height="1086" loading="lazy" decoding="async" alt="Concept rendering of the data hall: two rows of server racks around a glass-doored contained aisle under the warehouse roof trusses, with room for more."><figcaption>Concept rendering · the data hall</figcaption></figure>
     </div>
 
     <div class="mad-sub rv"><div class="eyebrow">Why Patagonia</div><h3>Power, cold air and room to grow, in one place.</h3></div>
